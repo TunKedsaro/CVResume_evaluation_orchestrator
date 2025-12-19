@@ -35,5 +35,7 @@ def health():
 @app.get('/v1/orchestrator/evaluate-cvresume')
 def evaluate_cv():
     return {
-        "message": "OK now can update"
+        "status": "ok",
+        "service": "resume_evaluation_orchestrator",
+        "environment": "prod"
     }
