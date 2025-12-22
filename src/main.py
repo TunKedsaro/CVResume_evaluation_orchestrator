@@ -29,10 +29,12 @@ app.add_middleware(
 @app.get('/')
 def health():
     return {
-        "message": "OK now can update"
+        "status": "ok",
+        "service": "resume_evaluation_orchestrator",
+        "environment": "prod"
     }
 
-@app.get('/v1/orchestrator/evaluate-cvresume')
+@app.post('/api/v1/cv-evaluations')
 def evaluate_cv():
     return {
         "status": "ok",
