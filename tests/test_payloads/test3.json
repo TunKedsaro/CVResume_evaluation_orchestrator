@@ -1,0 +1,94 @@
+{
+    "resume_json": {
+      "profile": {
+        "name": "Nachai Limsettho",
+        "location": "Bangkok, Thailand",
+        "email": "nachai@example.com",
+        "phone": "+66-xx-xxx-xxxx",
+        "linkedin": "linkedin.com/in/nachai",
+        "github": "github.com/nachai",
+        "title": "Senior AI Engineer / ML Engineer (LLM & Platform)",
+        "years_experience": 7
+      },
+      "summary": "Senior AI Engineer with 7+ years delivering production ML and LLM systems end-to-end: data pipelines, model training/serving, RAG, evaluation, and cloud deployment on GCP. Led orchestrator-based microservices for CV generation and resume evaluation with strict schema validation, structured logging/traceability, and token-cost monitoring. Strong in Python, FastAPI, BigQuery, vector search, CI/CD, and MLOps practices (testing, monitoring, rollout safety).",
+      "experience": [
+        {
+          "company": "Terra Digital Ventures",
+          "location": "Bangkok, Thailand",
+          "title": "Senior AI Engineer (Tech Lead)",
+          "start_date": "2024-01",
+          "end_date": "2025-12",
+          "highlights": [
+            "Architected and shipped an orchestrator/BFF layer integrating Data API + LLM evaluator for resume scoring; enforced stable contracts (camelCase normalization, error envelope) and end-to-end correlation IDs for observability.",
+            "Reduced candidate/profile hydration latency from ~80s to ~2.8s by consolidating BigQuery joins into a single optimized query and introducing caching; improved p95 response time by ~70% under load testing.",
+            "Designed and implemented a HyDE-style retrieval pipeline (synthetic query generation + embeddings + top-k reranking) for role/job recommendation; improved top-5 retrieval precision from 0.52 → 0.71 on an internal labeled set (n=250).",
+            "Built an automated LLM evaluation harness (golden set + regression tests + rubric scoring) and release checklist; reduced prompt regressions by ~60% and improved answer faithfulness by ~15% across 3 releases.",
+            "Implemented production-grade reliability features: request timeouts, retries, circuit-breaking for downstream services, and structured logging of cost/latency; cut incident MTTR by ~40% via faster root-cause isolation.",
+            "Led a 4-person squad (2 DE, 1 DS, 1 BE) to deliver an MVP in 8 weeks; aligned stakeholders on scope, KPIs, and acceptance criteria."
+          ],
+          "tech_stack": ["Python", "FastAPI", "Pydantic", "OpenAPI", "GCP Cloud Run", "BigQuery", "Embeddings", "RAG", "Docker", "CI/CD", "Structlog"]
+        },
+        {
+          "company": "Consulting Firm (AI & Digital Transformation)",
+          "location": "Singapore",
+          "title": "Machine Learning Engineer",
+          "start_date": "2021-06",
+          "end_date": "2023-12",
+          "highlights": [
+            "Delivered ML solutions for telecom/insurance/fintech, from problem framing to production deployment; collaborated with business owners to define KPIs and measurement plans.",
+            "Built feature pipelines and model training workflows; deployed services with monitoring dashboards and alerting, improving model availability and reducing data-quality incidents.",
+            "Mentored junior engineers on code quality, testing, and reproducible ML experimentation."
+          ],
+          "tech_stack": ["Python", "SQL", "ML pipelines", "Cloud services", "Monitoring"]
+        }
+      ],
+      "education": [
+        {
+          "degree": "M.Sc.",
+          "field": "Computer Science (Machine Learning)",
+          "school": "Example University",
+          "location": "Japan",
+          "start_year": 2016,
+          "end_year": 2018,
+          "highlights": [
+            "Thesis: Retrieval-augmented NLP systems and evaluation methods",
+            "Presented research at 2 conferences; built reproducible experiments (Python, statistical testing)"
+          ]
+        }
+      ],
+      "skills": {
+        "programming": ["Python", "SQL"],
+        "ml_ai": ["Machine Learning", "LLMs", "RAG", "Embeddings", "Prompt engineering", "Model evaluation", "HyDE"],
+        "mlops": ["Model serving", "Monitoring & alerting", "A/B testing", "Regression testing", "Experiment tracking"],
+        "backend": ["FastAPI", "REST API design", "Pydantic", "OpenAPI", "Async I/O"],
+        "data": ["BigQuery", "ETL/ELT", "Data modeling"],
+        "cloud_devops": ["GCP Cloud Run", "Docker", "CI/CD", "Workload Identity"],
+        "soft_skills": ["Stakeholder management", "Technical leadership", "Communication", "Project planning"],
+        "languages": ["English", "Thai", "Japanese"]
+      },
+      "activities": [
+        {
+          "name": "LLM Evaluation Harness (Internal Tooling)",
+          "details": "Built a golden-dataset based evaluation harness (rubric scoring, regression checks, release gates) for RAG and resume-evaluation prompts; improved release confidence and reduced regressions by ~60%.",
+          "tech_stack": ["Python", "pytest", "BigQuery", "RAG"]
+        },
+        {
+          "name": "Knowledge Sharing / Tech Talks",
+          "details": "Ran internal workshops on orchestrator architecture, API reliability patterns, and production LLM practices (prompt versioning, caching, monitoring)."
+        },
+        {
+          "name": "Open-source / Internal Libraries",
+          "details": "Contributed reusable utilities for schema validation and JSON naming conversion; reduced integration bugs and improved developer onboarding."
+        }
+      ]
+    },
+    "target_role": "role#ai_engineer",
+    "output_lang": "en"
+  }
+
+
+
+
+
+
+

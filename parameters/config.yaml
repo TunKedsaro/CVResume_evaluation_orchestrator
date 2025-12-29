@@ -1,0 +1,59 @@
+# -------------------------------------------------------------------
+# parameters/config.yaml
+#
+# WHAT THIS FILE IS FOR
+# --------------------
+# This file defines **service-level and downstream API endpoint paths**
+# used by the CV Resume Evaluation Orchestrator.
+#
+# It contains ONLY:
+# - Static endpoint paths
+# - Service naming metadata
+#
+# These values are combined with base URLs defined in:
+#   parameters/parameters.yaml
+#
+# Example:
+#   data_api_base_url + data_api.endpoints.role_core
+#
+# DESIGN PRINCIPLES
+# -----------------
+# - No secrets
+# - No environment-specific values
+# - No full URLs (paths only)
+# - Stable, versioned contracts
+#
+# This allows:
+# - Safe reuse across environments
+# - Clear visibility of inter-service contracts
+# - Easy auditing when endpoints change
+#
+# WHAT THIS FILE IS NOT FOR
+# ------------------------
+# This file MUST NOT contain:
+# - Environment variables
+# - Hostnames or base URLs
+# - Timeouts or retries
+# - Feature flags
+# - Business logic
+#
+# Those belong in parameters/parameters.yaml or env vars.
+#
+# Any change here MUST be reflected in:
+# - API_spec.md (if public-facing)
+# - Downstream service contracts
+# -------------------------------------------------------------------
+
+service:
+  name: "cvresume_evaluation_orchestrator"
+
+data_api:
+  endpoints:
+    # Role core info (role_id -> role metadata)
+    role_core: "/v1/roles/{role_id}/core"
+
+evaluation_api:
+  endpoints:
+    # Downstream evaluation endpoint (async evaluator)
+    final_resume_score_async: "/evaluation/final-resume-score-async"
+

@@ -1,0 +1,77 @@
+# -------------------------------------------------------------------
+# parameters/parameters.yaml
+#
+# WHAT THIS FILE IS FOR
+# --------------------
+# This file defines the **default runtime configuration** for the
+# CV Resume Evaluation Orchestrator API.
+#
+# It is the primary configuration source used by:
+#   functions/utils/settings.py
+#
+# LOAD & PRECEDENCE
+# -----------------
+# Configuration is loaded in the following order (last wins):
+#
+#   1) parameters/parameters.yaml   ← this file
+#   2) Environment variables prefixed with:
+#        CVRESUME_ORCH_*
+#
+# This allows:
+# - Safe local and default values via YAML
+# - Secure overrides in Cloud Run / CI via env vars
+# - No secrets hard-coded in source code
+#
+# DESIGN PRINCIPLES
+# -----------------
+# - Explicit, typed configuration
+# - No business logic
+# - No code execution
+# - No hidden defaults
+# - Fail-fast if required fields are missing
+#
+# WHAT THIS FILE IS NOT FOR
+# ------------------------
+# This file MUST NOT contain:
+# - Secrets or credentials
+# - Inline business logic
+# - Hard-coded environment assumptions
+# - Non-runtime documentation
+#
+# Any new runtime-configurable behavior MUST:
+# 1) Be added here (with a sensible default), AND
+# 2) Be declared in Settings (Pydantic model)
+#
+# -------------------------------------------------------------------
+
+service_name: "cvresume_evaluation_orchestrator"
+environment: "prod"
+log_level: "INFO"
+
+# -------------------------------------------------------------------
+# Downstream service base URLs
+# -------------------------------------------------------------------
+data_api_base_url: "https://eport-data-api-810737581373.asia-southeast1.run.app"
+evaluation_api_base_url: "https://cvresume-service-du7yhkyaqq-as.a.run.app"
+
+# -------------------------------------------------------------------
+# Networking & retry behavior
+# -------------------------------------------------------------------
+http_timeout_seconds: 90
+evaluation_timeout_seconds: 180
+max_retries: 2
+
+# -------------------------------------------------------------------
+# Feature flags
+# -------------------------------------------------------------------
+enable_debug_metadata: true
+enable_role_with_skills_and_responsibilities_str: true
+
+# -------------------------------------------------------------------
+# Response normalization
+# -------------------------------------------------------------------
+# Container keys whose *inner keys* must NOT be camelCased.
+# These containers are treated as free-form dictionaries
+# (e.g. rubric names, dynamic IDs).
+preserve_container_keys:
+  - scores
