@@ -78,6 +78,7 @@ class ResumeEvaluationRequest(BaseModel):
                         "technical": ["Python", "LLMs", "GCP"]
                     }
                 },
+                # "targetRole": "NA",
                 "outputLang": "en"
             }
         },

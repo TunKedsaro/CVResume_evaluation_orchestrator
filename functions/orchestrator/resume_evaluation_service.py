@@ -164,17 +164,33 @@ class ResumeEvaluationService:
         # Normalize evaluator response
         # (handles legacy typo: 'conclution')
         # ------------------------------------------------------------------
-        response_obj = data.get("response", {}) if isinstance(data, dict) else {}
+        response_obj = data.get("response", {}) or {}
 
-        conclusion = response_obj.get("conclusion") or response_obj.get("conclution") or {}
+        conclusion = (
+            response_obj.get("conclusion")
+            or response_obj.get("Conclution")
+            or response_obj.get("conclution")
+            or {}
+        )
 
-        normalized: Dict[str, Any] = {
+        section_detail = (
+            response_obj.get("section_detail")
+            or response_obj.get("Section_detail")
+            or {}
+        )
+
+        metadata = (
+            response_obj.get("metadata")
+            or response_obj.get("Metadata")
+            or {}
+        )
+
+        normalized = {
             "conclusion": conclusion,
-            "section_detail": response_obj.get("section_detail", {}) or {},
-            "metadata": response_obj.get("metadata", {}) or {},
+            "section_detail": section_detail,
+            "metadata": metadata,
             "response_time": data.get("response_time"),
             "estimated_cost_thd": data.get("estimated_cost_thd"),
             "correlation_id": correlation_id,
         }
-
         return normalized

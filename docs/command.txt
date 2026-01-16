@@ -1,0 +1,21 @@
+docker build -f Dockerfile.dev -t cvresume-orchestrator .
+
+docker run -it --name cvresume-orchestrator -p 8091:8091 -v %cd%:/code cvresume-orchestrator
+
+http://localhost:8091/docs
+
+gcloud builds submit \
+  --config=cloudbuild.yaml \
+  --project=poc-piloturl-nonprod
+
+
+gcloud run deploy cv-orchestrator-service \
+--image=asia-southeast1-docker.pkg.dev/poc-piloturl-nonprod/cv-orchestrator/cv-orchestrator:latest \
+--region=asia-southeast1 \
+--port=4000 \
+--memory=2Gi \
+--cpu=2 \
+--max-instances=5 \
+--set-env-vars=APP_ENV=prod,GOOGLE_API_KEY=AIzaSyARNuGDJnMhJEl2ItKgL2b-3dHAWb5urRk \
+--allow-unauthenticated
+

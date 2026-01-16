@@ -323,36 +323,34 @@ async def evaluate_resume(payload: ResumeEvaluationRequest, request: Request) ->
     # ---------------------------------------------------------------
     # 3) Build stable orchestrator response
     # ---------------------------------------------------------------
-    concl = result.get("conclusion", {}) if isinstance(result.get("conclusion"), dict) else {}
-    final_score = float(concl.get("final_resume_score", 0.0))
+    concl = result.get("conclusion", {}) or {}
+    print(f"concl->\n{concl}")
 
-    if settings.enable_debug_metadata:
-        logger.info(
-            "resume_evaluation_response_debug",
-            correlation_id=correlation_id,
-            final_score=final_score,
-            has_section_detail=bool(result.get("section_detail")),
-            response_time=result.get("response_time"),
-            estimated_cost_thd=result.get("estimated_cost_thd"),
-        )
+    raw = float(concl.get("total_weighted_raw_score", 0))
+    max_ = float(concl.get("total_weighted_max_score", 0))
+    final_score = (raw / max_ * 100) if max_ > 0 else 0.0
 
-    upstream_status = result.get("status")  # may be None
     status, original_status = normalize_orchestrator_status(
         http_status=200,
-        upstream_status=upstream_status,
+        upstream_status=None,
     )
 
     envelope = OrchestratorEnvelope(
-        status=status,  # ALWAYS "success" for 200
+        status=status,
         correlation_id=result.get("correlation_id") or correlation_id,
         data=ResumeEvaluationResponse(
             conclusion=EvaluationConclusion(
+                global_grade=concl.get("global_grade"),
+                total_weighted_raw_score=raw,
+                total_weighted_max_score=max_,
+                total_section_weight=float(concl.get("total_section_weight", 0)),
                 final_resume_score=final_score,
                 section_contribution=concl.get("section_contribution", {}) or {},
+                globalfeedback=concl.get("globalfeedback"),
             ),
             section_detail=result.get("section_detail", {}) or {},
         ),
-        metadata={"originalStatus": original_status} if original_status else None,
+        metadata=result.get("metadata"),
     )
 
     payload_dict = convert_keys_snake_to_camel(

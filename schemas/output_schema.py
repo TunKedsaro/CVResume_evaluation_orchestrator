@@ -45,17 +45,50 @@ from __future__ import annotations
 from typing import Any, Dict, Optional, Literal
 from pydantic import BaseModel, Field
 
+# --------------------------------------------------
+# Section-level contribution (used in conclusion)
+# --------------------------------------------------
+class SectionContribution(BaseModel):
+    '''
+    "session_grade": "A+",
+    "total_section_raw_score": 20,
+    "total_section_max_score": 20,
+    "section_weight": 0.1,
+    "total_section_raw_score_x_weight": 2,
+    "total_section_max_score_x_weight": 2
+    '''
+    session_grade: Optional[str] = None
+    total_section_raw_score: float = 0
+    total_section_max_score: float = 0
+    section_weight: float = 0
+    total_section_raw_score_x_weight: float = 0
+    total_section_max_score_x_weight: float = 0
 
+# --------------------------------------------------
+# Aggregated conclusion
+# --------------------------------------------------
 class EvaluationConclusion(BaseModel):
     """
     Aggregated evaluation outcome.
-
     Contains the final resume score and per-section contribution
     used to compute the overall result.
+    "global_grade": "A",
+    "total_weighted_raw_score": 16.8,
+    "total_weighted_max_score": 20,
+    "total_section_weight": 1,
+    "section_contribution": {
+        "Profile": {},
+        "Summary": {},
+        ...
+        "Skills":{}},
+    "globalfeedback":{}
     """
-
-    final_resume_score: float = Field(..., ge=0, le=100)
-    section_contribution: Dict[str, Any] = Field(default_factory=dict)
+    global_grade: Optional[str] = None
+    total_weighted_raw_score: float = Field(..., ge=0)
+    total_weighted_max_score: float = Field(..., ge=0)
+    total_section_weight: float = Field(..., ge=0)
+    section_contribution: Dict[str, SectionContribution] = Field(default_factory=dict)
+    globalfeedback: Optional[str] = None
 
 
 class ResumeEvaluationResponse(BaseModel):
@@ -66,6 +99,20 @@ class ResumeEvaluationResponse(BaseModel):
     conclusion: EvaluationConclusion
     section_detail: Dict[str, Any] = Field(default_factory=dict)
 
+# --------------------------------------------------
+# Debag / audit metadata
+# --------------------------------------------------
+class EvaluationMetadata(BaseModel):
+    '''
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2026-01-15 15:52:15.895342+07:00",
+    "weights_version": "weights_v1",
+    "prompt_version": "prompt_v2"
+    '''
+    model_name: Optional[str] = None
+    timestamp: Optional[str] = None
+    weights_version: Optional[str] = None
+    prompt_version: Optional[str] = None
 
 class OrchestratorEnvelope(BaseModel):
     """
