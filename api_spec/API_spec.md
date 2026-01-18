@@ -215,7 +215,7 @@ Implemented via Pydantic field aliases + `populate_by_name=True`, and **verified
       }
     ],
     "skills": {
-      "technical": ["Python", "LLMs", "GCP"]
+      "skills": ["Python", "LLMs", "GCP"]
     }
   },
   "target_role": "role#ai_engineer",

@@ -87,6 +87,7 @@ from typing import Any, Dict, Optional
 
 from functions.utils.http_client import HttpClient
 from functions.utils.settings import Settings
+from functions.orchestrator.data_fetcher import load_orchestrator_config
 
 
 class ResumeEvaluationService:
@@ -121,16 +122,27 @@ class ResumeEvaluationService:
     ) -> Dict[str, Any]:
         correlation_id = correlation_id or str(uuid.uuid4())
 
-        url = f"{self.settings.evaluation_api_base_url}/evaluation/final-resume-score-async"
+        # # url = f"{self.settings.evaluation_api_base_url}/evaluation/final-resume-score-async"
+        # config = load_orchestrator_config()
+        # endpoint = config["evaluation_api"]["endpoints"]["final_resume_score_async"]
+
+        # url = f"{self.settings.evaluation_api_base_url.rstrip('/')}{endpoint}"
+        base_url = "https://cvresume-service-du7yhkyaqq-as.a.run.app"
+        url = f"{base_url}/evaluation/final-resume-score-async"
 
         # ------------------------------------------------------------------
         # Build evaluator payload
         # ------------------------------------------------------------------
+        # payload: Dict[str, Any] = {
+        #     "resume_json": resume_json,
+        #     "output_lang": output_lang,
+        # }
         payload: Dict[str, Any] = {
-            "resume_json": resume_json,
+            "resume_json": {
+                "response": resume_json
+            },
             "output_lang": output_lang,
         }
-
         # Include target_role ONLY if present (role-agnostic evaluation supported)
         if target_role:
             payload["target_role"] = target_role

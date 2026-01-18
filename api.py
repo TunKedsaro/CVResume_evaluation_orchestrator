@@ -344,7 +344,6 @@ async def evaluate_resume(payload: ResumeEvaluationRequest, request: Request) ->
                 total_weighted_raw_score=raw,
                 total_weighted_max_score=max_,
                 total_section_weight=float(concl.get("total_section_weight", 0)),
-                final_resume_score=final_score,
                 section_contribution=concl.get("section_contribution", {}) or {},
                 globalfeedback=concl.get("globalfeedback"),
             ),

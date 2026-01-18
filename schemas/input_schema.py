@@ -75,7 +75,7 @@ class ResumeEvaluationRequest(BaseModel):
                         "AI/ML engineer with experience in production systems."
                     ],
                     "skills": {
-                        "technical": ["Python", "LLMs", "GCP"]
+                        "skills": ["Python", "LLMs", "GCP"]
                     }
                 },
                 # "targetRole": "NA",
